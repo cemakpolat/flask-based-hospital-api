@@ -21,3 +21,4 @@ def long_task(sensor_id):
 def send_message(message):
     socketio = SocketIO(application, message_queue=application.config['SOCKETIO_MESSAGE_QUEUE']) 
     socketio.emit('celery_data_received', {'status': 'success', 'data': message})
+

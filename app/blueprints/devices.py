@@ -4,28 +4,44 @@ from app.extensions import mongo
 from app.utils.responses import success_response, error_response
 from marshmallow import ValidationError  # Import ValidationError
 from app.utils.auth_utils import roles_required
+from functools import wraps
 
 
 devices_bp = Blueprint('devices', __name__, url_prefix='/devices')
 device_schema = DeviceSchema()
 devices_schema = DeviceSchema(many=True)
 
+
+# Error handling decorator
+def handle_errors(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        try:
+            return f(*args, **kwargs)
+        except ValidationError as e:
+            return error_response(e.messages, 400)
+        except Exception as e:
+            return error_response(str(e), 500)
+    return wrapper
+
+
 @devices_bp.route('', methods=['POST'])
 @roles_required('admin', 'user')
+@handle_errors
 def create_device():
     """Creates a new device."""
     
-    try:
-        data = request.get_json()
-        validated_data = device_schema.load(data)
+    # try:
+    data = request.get_json()
+    validated_data = device_schema.load(data)
 
-        device = Device(**validated_data)
-        device.save()
-        return success_response(device_schema.dump(device), "Device created successfully", 201)
-    except ValidationError as e:
-        return error_response(e.messages, 400)
-    except Exception as e:
-        return error_response(str(e), 500)
+    device = Device(**validated_data)
+    device.save()
+    return success_response(device_schema.dump(device), "Device created successfully", 201)
+    # except ValidationError as e:
+    #     return error_response(e.messages, 400)
+    # except Exception as e:
+    #     return error_response(str(e), 500)
 
 
 @devices_bp.route('/room/nulls', methods=['GET'])
