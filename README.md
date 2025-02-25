@@ -10,11 +10,11 @@ This project simulates a hospital environment where patients, rooms, devices, an
 - **Devices**: Manage devices (e.g., heart rate monitors, temperature sensors) and associate them with patients or rooms.
 - **Measurements**: Generate and store measurements from devices and sensors.
 
- JWT Authentication
-✅ MongoDB User Storage
-✅ Role-Based Access Control (RBAC)
-✅ Blueprint Modular Structure
-✅ Marshmallow for Data Validation
+- JWT Authentication
+- MongoDB User Storage
+- Role-Based Access Control (RBAC)
+- Blueprint Modular Structure
+- Marshmallow for Data Validation
 
 ## Setup
 
