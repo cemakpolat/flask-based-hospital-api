@@ -1,0 +1,29 @@
+services:
+  flask-app:
+    build: .
+    ports:
+      - "5002:5000"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/hospital_db"
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+  # frontend:
+  #   build: ./frontend  # Assuming your Dockerfile is in a 'frontend' directory
+  #   ports:
+  #     - "8085:80"
+  #   depends_on:
+  #     - flask-app  # Ensure Flask app is running before frontend
+  patient-simulator:
+    build: ./app/docker_simulators/
+    depends_on:
+      - flask-app
+
+volumes:
+  mongo-data:

@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  # Flask application
+  flask-app:
+    build: .
+    ports:
+      - "5002:5000"
+    depends_on:
+      - mongo
+      - redis
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/hospital_db"
+      CELERY_BROKER_URL: "redis://redis:6379/0"
+      CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+      SOCKETIO_MESSAGE_QUEUE: "redis://redis:6379/0"
+    command: flask run --host=0.0.0.0
+    networks:
+      - app-network
+
+  # MongoDB
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+  # Redis (for Celery and WebSocket message queue)
+  redis:
+    image: redis:7.4.2
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    networks:
+      - app-network     
+
+  # Celery worker
+  celery-worker:
+    build: .
+    depends_on:
+      - flask-app
+      - redis
+    environment:
+      MONGO_URI: "mongodb://mongo:27017/hospital_db"
+      CELERY_BROKER_URL: "redis://redis:6379/0"
+      CELERY_RESULT_BACKEND: "redis://redis:6379/0"
+      SOCKETIO_MESSAGE_QUEUE: "redis://redis:6379/0"
+    command: celery -A app.celery_tasks worker --loglevel=debug
+    restart: on-failure
+    networks:
+      - app-network
+
+  # Frontend application
+  frontend:
+    build: ./frontend  # Assuming your Dockerfile is in a 'frontend' directory
+    ports:
+      - "8085:80"
+    depends_on:
+      - flask-app  # Ensure Flask app is running before frontend
+    networks:
+      - app-network
+
+  # Patient simulator
+  patient-simulator:
+    build: ./app/docker_simulators/
+    depends_on:
+      - flask-app
+    networks:
+      - app-network
+
+volumes:
+  mongo-data:
+  redis-data:
+
+
+networks:
+  app-network:
+    driver: bridge
