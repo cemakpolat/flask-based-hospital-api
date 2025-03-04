@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "c5c3c1a4-14b5-4608-88bc-5860e318f2e4",
+		"name": "hospital-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "2445897"
+	},
+	"item": [
+		{
+			"name": "user register",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"test\",\n    \"password\":\"1234\",\n    \"role\":\"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/api/auth/register"
+			},
+			"response": []
+		},
+		{
+			"name": "user login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\":\"admin\",\n    \"password\":\"admin123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/api/auth/login"
+			},
+			"response": []
+		},
+		{
+			"name": "create devices",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MDQ4MDMyMCwianRpIjoiZGIxNzc0ZGYtNmUyOC00M2JlLWIwNDUtMjYxZjZiYTIzZjFlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluIiwibmJmIjoxNzQwNDgwMzIwLCJjc3JmIjoiNmYzNTljOTMtNjdiNi00OTE0LWI3NjUtMWFlNDlkYWJmZjVhIiwiZXhwIjoxNzQwNDgxMjIwLCJyb2xlIjoiYWRtaW4ifQ.pDAnOk8Hbk8td5F7KfC_Tj-IV2Uu-Hp7Byw_dT8lbzU"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Device 1\",\n    \"device_id\": \"cem\",\n    \"device_type\": \"Sensor\",\n    \"room_id\": \"Room101\",\n    \"device_category\": \"personal\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5002/api/devices"
+			},
+			"response": []
+		},
+		{
+			"name": "start celery task",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": "http://localhost:5002/api/tasks/start_task/1"
+			},
+			"response": []
+		},
+		{
+			"name": "get devices",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MTA4NTQ2MywianRpIjoiZWI5MTExMmItMWRjOC00NmUzLTllMzMtOWY1ZjMwZWFjMjk3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluIiwibmJmIjoxNzQxMDg1NDYzLCJjc3JmIjoiNzkwYTNkZWItNjdiZC00NTczLTg0OTItOTQ2YWQwYjgwNmU1IiwiZXhwIjoxNzQxMDg2MzYzLCJyb2xlIjoiYWRtaW4ifQ.YJ4K5-dwlIwjMXNxCUs-kQgPdENJnwwxYpJ68qHz2Bg"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5002/api/devices"
+			},
+			"response": []
+		},
+		{
+			"name": "GET patients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MTA4NTQ2MywianRpIjoiZWI5MTExMmItMWRjOC00NmUzLTllMzMtOWY1ZjMwZWFjMjk3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluIiwibmJmIjoxNzQxMDg1NDYzLCJjc3JmIjoiNzkwYTNkZWItNjdiZC00NTczLTg0OTItOTQ2YWQwYjgwNmU1IiwiZXhwIjoxNzQxMDg2MzYzLCJyb2xlIjoiYWRtaW4ifQ.YJ4K5-dwlIwjMXNxCUs-kQgPdENJnwwxYpJ68qHz2Bg"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5002/api/patients"
+			},
+			"response": []
+		},
+		{
+			"name": "GET rooms",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MTA4NTQ2MywianRpIjoiZWI5MTExMmItMWRjOC00NmUzLTllMzMtOWY1ZjMwZWFjMjk3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluIiwibmJmIjoxNzQxMDg1NDYzLCJjc3JmIjoiNzkwYTNkZWItNjdiZC00NTczLTg0OTItOTQ2YWQwYjgwNmU1IiwiZXhwIjoxNzQxMDg2MzYzLCJyb2xlIjoiYWRtaW4ifQ.YJ4K5-dwlIwjMXNxCUs-kQgPdENJnwwxYpJ68qHz2Bg"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5002/api/rooms"
+			},
+			"response": []
+		},
+		{
+			"name": "get measurements",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0MTA4NjQwNywianRpIjoiNTVmOTE4OTEtYjQxOS00ZjE2LTkyM2YtN2EyMDg2MzdlNDE4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImFkbWluIiwibmJmIjoxNzQxMDg2NDA3LCJjc3JmIjoiN2UyZDA4NTAtMmM4NC00OGJjLTkzNmEtYzI5MTAwYzMxZmQxIiwiZXhwIjoxNzQxMDg3MzA3LCJyb2xlIjoiYWRtaW4ifQ.iO0zceLhloeaDuuTJYNqt1u72UNEFK15B-gWCe8cEA8"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:5002/api/measurements/device_shared_947359f2"
+			},
+			"response": []
+		}
+	]
+}
