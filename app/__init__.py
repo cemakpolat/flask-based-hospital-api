@@ -26,6 +26,7 @@ from .blueprints.patients import patients_bp
 from .blueprints.devices import devices_bp
 from .blueprints.rooms import rooms_bp
 from .blueprints.auth import auth_bp
+from .blueprints.measurements import measurement_bp
 from .blueprints.tasks import tasks_bp
 
 application.register_blueprint(patients_bp, url_prefix='/api/patients')
@@ -33,6 +34,7 @@ application.register_blueprint(devices_bp, url_prefix='/api/devices')
 application.register_blueprint(rooms_bp, url_prefix='/api/rooms')
 application.register_blueprint(auth_bp, url_prefix='/api/auth')
 application.register_blueprint(tasks_bp, url_prefix='/api/tasks')
+application.register_blueprint(measurement_bp, url_prefix='/api/measurements')
 
 
 # @socketio.on('connect')
