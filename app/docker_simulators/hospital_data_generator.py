@@ -88,7 +88,7 @@ async def simulate_measurements(session):
             "device_id": sensor["device_id"],
             "patient_id": None
         }
-        async with session.post(f"{BASE_URL}/rooms/measurements/{sensor['device_id']}", json=measurement_data, headers=get_header_with_token(access_token=ACCESS_TOKEN)) as response:
+        async with session.post(f"{BASE_URL}/measurements/{sensor['device_id']}", json=measurement_data, headers=get_header_with_token(access_token=ACCESS_TOKEN)) as response:
             if response.status == 201:
                 logging.info(f"Measurement created for room sensor: {measurement_data}")
             else:
@@ -122,7 +122,7 @@ async def simulate_measurements(session):
                 "patient_id": patient_id
             }
             # Send the measurement to the Flask API
-            async with session.post(f"{BASE_URL}/rooms/measurements/{device['device_id']}", json=measurement_data, headers=get_header_with_token(access_token=ACCESS_TOKEN)) as response:
+            async with session.post(f"{BASE_URL}/measurements/{device['device_id']}", json=measurement_data, headers=get_header_with_token(access_token=ACCESS_TOKEN)) as response:
                 if response.status == 201:
                     logging.info(f"Measurement created for patient device: {measurement_data}")
                 else:
@@ -148,7 +148,7 @@ async def simulate_measurements(session):
         }
 
         # Send the measurement to the Flask API
-        async with session.post(f"{BASE_URL}/rooms/measurements/{device['device_id']}", json=measurement_data, headers=get_header_with_token(access_token=ACCESS_TOKEN)) as response:
+        async with session.post(f"{BASE_URL}/measurements/{device['device_id']}", json=measurement_data, headers=get_header_with_token(access_token=ACCESS_TOKEN)) as response:
             if response.status == 201:
                 logging.info(f"Measurement created for shared device: {measurement_data}")
             else:

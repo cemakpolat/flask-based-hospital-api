@@ -5,10 +5,10 @@ from app.utils.responses import success_response, error_response
 from marshmallow import ValidationError  # Import ValidationError
 from app.utils.auth_utils import roles_required
 
-
 devices_bp = Blueprint('devices', __name__, url_prefix='/devices')
 device_schema = DeviceSchema()
 devices_schema = DeviceSchema(many=True)
+
 
 @devices_bp.route('', methods=['POST'])
 @roles_required('admin', 'user')
@@ -89,6 +89,7 @@ def get_all_devices():
         return success_response(devices_schema.dump(devices))
     except Exception as e:
         return error_response(str(e), 500)
+
 @devices_bp.route('/shared', methods=['GET'])
 @roles_required('admin', 'user')
 def get_shared_devices():
